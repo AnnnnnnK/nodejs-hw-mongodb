@@ -11,8 +11,6 @@ export const authenticate = async (req, res, next) => {
   }
 
   const [bearer, token] = authHeader.split(' ');
-  console.log('bearer:', bearer);
-  console.log('Token:', token);
 
   if (bearer !== 'Bearer' || !token) {
     next(createHttpError(401, 'Auth header should be of type Bearer'));
@@ -21,8 +19,6 @@ export const authenticate = async (req, res, next) => {
 
   const session = await Session.findOne({ accessToken: token });
 
-  console.log('Authorization Header:', authHeader);
-  console.log('Session:', session);
   if (!session) {
     next(createHttpError(401, 'Session not found'));
     return;
@@ -43,6 +39,5 @@ export const authenticate = async (req, res, next) => {
   }
 
   req.user = user;
-
   next();
 };
