@@ -32,7 +32,7 @@ export const getAllContacts = async ({
 };
 
 export const getContactById = async (contactId, userId) => {
-  const contact = await contactsModel.findById({ _id: contactId, userId });
+  const contact = await contactsModel.findOne({ _id: contactId, userId });
   return contact;
 };
 
@@ -41,21 +41,20 @@ export const createContact = async (payload) => {
 };
 
 export const updateContact = async (id, userId, payload, options = {}) => {
-  const rawResult = await contactsModel.findByIdAndUpdate(
+  const rawResult = await contactsModel.findOneAndUpdate(
     { _id: id, userId },
     payload,
     {
       new: true,
-      includeResultMetadata: true,
       ...options,
     },
   );
 
-  if (!rawResult || !rawResult.value) return null;
+  if (!rawResult) return null;
 
   return {
-    contact: rawResult.value,
-    isNew: !rawResult.lastErrorObject.updatedExisting,
+    contact: rawResult,
+    isNew: false,
   };
 };
 
