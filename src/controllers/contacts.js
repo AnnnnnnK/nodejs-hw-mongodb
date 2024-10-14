@@ -8,6 +8,9 @@ import {
 } from '../services/contacts.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { env } from '../utils/env.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export const getContactsController = async (req, res) => {
   const userId = req.user._id;
@@ -72,7 +75,18 @@ export const updateContactController = async (req, res, next) => {
   const id = req.params.contactId;
   const userId = req.user._id;
   const payload = req.body;
+  const photo = req.file;
 
+  let photoUrl;
+
+  if (photo) {
+    if (env('ENABLE_CLOUDINARY') === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = await saveFileToUploadDir(photo);
+    }
+    payload.photo = photoUrl;
+  }
   const result = await updateContact(id, userId, payload);
 
   if (!result) {
