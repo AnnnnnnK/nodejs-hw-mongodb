@@ -15,7 +15,6 @@ requestBody:
           - phoneNumber
           - email
           - contactType
-          - userId
         properties:
           name:
             description: "Contacts's name"
@@ -47,7 +46,7 @@ requestBody:
             type: string
             format: binary
 responses:
-  '201':
+  '200':
     description: Creates a contact
     content:
       application/json:
