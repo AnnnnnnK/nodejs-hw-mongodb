@@ -50,8 +50,7 @@
                   "name",
                   "phoneNumber",
                   "email",
-                  "contactType",
-                  "userId"
+                  "contactType"
                 ],
                 "properties": {
                   "name": {
@@ -84,11 +83,6 @@
                     ],
                     "example": "personal"
                   },
-                  "userId": {
-                    "description": "Contact's parent id",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
-                  },
                   "photo": {
                     "description": "Contact's photo",
                     "type": "string",
@@ -100,7 +94,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Creates a contact",
             "content": {
               "application/json": {
@@ -445,11 +439,6 @@
                     ],
                     "example": "personal"
                   },
-                  "userId": {
-                    "description": "Contact's parent id",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
-                  },
                   "photo": {
                     "description": "Contact's photo",
                     "type": "string",
@@ -461,8 +450,8 @@
           }
         },
         "responses": {
-          "201": {
-            "description": "Creates a contact",
+          "200": {
+            "description": "Updates a contact",
             "content": {
               "application/json": {
                 "schema": {
@@ -479,7 +468,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully created a contact!"
+                      "example": "Successfully updated a contact!"
                     },
                     "data": {
                       "type": "object",
